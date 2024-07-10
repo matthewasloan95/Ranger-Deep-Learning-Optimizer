@@ -139,7 +139,9 @@ class Ranger(Optimizer):
                 # This old way is dep
                 exp_avg_sq.mul_(beta2).addcmul_(grad, grad, value=1 - beta2)
                 # compute mean moving avg
-                exp_avg.mul_(beta1).add_(1 - beta1, grad)
+                # exp_avg.mul_(beta1).add_(1 - beta1, grad)
+                # was the old way
+                exp_avg.mul_(beta1).add_(grad, alpha=1 - beta1) # fix overload
 
                 buffered = self.radam_buffer[int(state['step'] % 10)]
 
