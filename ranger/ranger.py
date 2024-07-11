@@ -176,7 +176,10 @@ class Ranger(Optimizer):
                     p_data_fp32.addcdiv_(-step_size *
                                          group['lr'], exp_avg, denom)
                 else:
-                    p_data_fp32.add_(-step_size * group['lr'], exp_avg)
+                    # p_data_fp32.add_(-step_size * group['lr'], exp_avg)
+                    # old
+                    # and new
+                    p_data_fp32.add_(exp_avg, alpha=-step_size * group['lr'])
 
                 p.data.copy_(p_data_fp32)
 
