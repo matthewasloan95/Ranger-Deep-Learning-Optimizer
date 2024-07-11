@@ -173,8 +173,12 @@ class Ranger(Optimizer):
                 # apply lr
                 if N_sma > self.N_sma_threshhold:
                     denom = exp_avg_sq.sqrt().add_(group['eps'])
-                    p_data_fp32.addcdiv_(-step_size *
-                                         group['lr'], exp_avg, denom)
+                    # p_data_fp32.addcdiv_(-step_size *
+                    #                      group['lr'], exp_avg, denom)
+                    # old
+                    # and new
+                    p_data_fp32.addcdiv_(exp_avg, denom, value=-step_size * group['lr'])
+
                 else:
                     # p_data_fp32.add_(-step_size * group['lr'], exp_avg)
                     # old
